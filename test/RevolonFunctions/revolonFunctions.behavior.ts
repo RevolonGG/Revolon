@@ -24,7 +24,7 @@ export async function shouldBehaveLikeRevolonFunctions(
     });
 
     it("Validates the symbol of token", async () => {
-      expect(await rvlnToken.symbol()).to.be.equal("RVLN");
+      expect(await rvlnToken.symbol()).to.be.equal("RPM");
     });
 
     it("Validates the decimal of token", async () => {

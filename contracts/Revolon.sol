@@ -31,12 +31,12 @@ contract Revolon is ERC20Burnable {
 
   event AuthorizationUsed(address indexed authorizer, bytes32 indexed nonce);
 
-  constructor(address[] memory accounts, uint256[] memory amounts) ERC20("Revolon", "RVLN") {
+  constructor(address[] memory accounts, uint256[] memory amounts) ERC20("Revolon", "RPM") {
     _mintToWallets(accounts, amounts);
   }
 
   function _mintToWallets(address[] memory _accounts, uint256[] memory _amounts) internal {
-    require(_accounts.length == _amounts.length, "RVLN:: LENGTH_MISMATCH");
+    require(_accounts.length == _amounts.length, "RPM:: LENGTH_MISMATCH");
 
     for (uint256 i = 0; i < _accounts.length; i++) {
       _mint(_accounts[i], _amounts[i]);
@@ -54,7 +54,7 @@ contract Revolon is ERC20Burnable {
     address recoveredAddress = ecrecover(digest, v, r, s);
     require(
       recoveredAddress != address(0) && recoveredAddress == signer,
-      "RVLN:: INVALID_SIGNATURE"
+      "RPM:: INVALID_SIGNATURE"
     );
   }
 
@@ -67,7 +67,7 @@ contract Revolon is ERC20Burnable {
     bytes32 r,
     bytes32 s
   ) external {
-    require(deadline >= block.timestamp, "RVLN:: AUTH_EXPIRED");
+    require(deadline >= block.timestamp, "RPM:: AUTH_EXPIRED");
 
     bytes32 encodeData = keccak256(
       abi.encode(PERMIT_TYPEHASH, owner, spender, value, nonces[owner], deadline)
@@ -99,9 +99,9 @@ contract Revolon is ERC20Burnable {
     bytes32 r,
     bytes32 s
   ) external {
-    require(block.timestamp < validBefore, "RVLN:: AUTH_EXPIRED");
-    require(block.timestamp > validAfter, "RVLN:: AUTH_NOT_YET_VALID");
-    require(!authorizationState[from][nonce], "RVLN:: AUTH_ALREADY_USED");
+    require(block.timestamp < validBefore, "RPM:: AUTH_EXPIRED");
+    require(block.timestamp > validAfter, "RPM:: AUTH_NOT_YET_VALID");
+    require(!authorizationState[from][nonce], "RPM:: AUTH_ALREADY_USED");
 
     bytes32 encodeData = keccak256(
       abi.encode(
